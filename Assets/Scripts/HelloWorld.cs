@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,10 +12,13 @@ public class HelloWorld : MonoBehaviour
     public Text guessLabel;
     public Text attemptLabel;
     public SceneLoader sceneLoader;
-    [SerializeField] private int min = 4;
-    [SerializeField] private int max = 1000;
-    private int attempts = -1;
-    private int guess; 
+    public int attempts = -1;
+    public int guess; 
+    public int initMin = 4;
+    public int initMax = 1000;
+    private int min;
+    private int max;
+
 
     #endregion
 
@@ -22,7 +26,9 @@ public class HelloWorld : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Reset();
         UpdateInfo();
+        DontDestroyOnLoad(gameObject);
     }
     
     #endregion
@@ -54,6 +60,12 @@ public class HelloWorld : MonoBehaviour
         guess = (min + max) / 2;
         guessLabel.text = $"Загадай число от {min} до {max}\nТвое число равно {guess}?";
         attemptLabel.text = $"Попыток потрачено: {attempts}";
+    }
+
+    private void Reset()
+    {
+        min = initMin;
+        max = initMax;
     }
 
     #endregion
